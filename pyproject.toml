@@ -3,15 +3,15 @@ name = "aisystemsecurity"
 version = "0.1.0"
 description = "AI System Security Jupyterlab Environment"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = "==3.12.12"
 dependencies = [
-    "ipykernel>=7.2.0",
-    "matplotlib>=3.10.8",
-    "numpy>=2.4.3",
-    "pillow>=12.1.1",
-    "torch>=2.10.0",
-    "torchvision>=0.25.0",
-    "tqdm>=4.67.3",
+    "ipykernel",
+    "matplotlib",
+    "numpy",
+    "pillow",
+    "torch==2.7.0",
+    "torchvision",
+    "tqdm",
 ]
 
 [[tool.uv.index]]
@@ -19,7 +19,17 @@ name = "pytorch-cpu"
 url = "https://download.pytorch.org/whl/cpu"
 explicit = true
 
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
 [tool.uv.sources]
-torch = { index = "pytorch-cpu" }
-torchvision = { index = "pytorch-cpu" }
-torchaudio = { index = "pytorch-cpu" }
+torch = { index = "pytorch-cu128" }
+torchvision = { index = "pytorch-cu128" }
+torchaudio = { index = "pytorch-cu128" }
+
+# [tool.uv.sources]
+# torch = { index = "pytorch-cpu" }
+# torchvision = { index = "pytorch-cpu" }
+# torchaudio = { index = "pytorch-cpu" }
