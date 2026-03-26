@@ -3,13 +3,14 @@ name = "aisystemsecurity"
 version = "0.1.0"
 description = "AI System Security Jupyterlab Environment"
 readme = "README.md"
-requires-python = "==3.12.12"
+requires-python = "==3.12.12" # use any version if you do not have cuda env
 dependencies = [
     "ipykernel",
+    "jupyter>=1.1.1",
     "matplotlib",
     "numpy",
     "pillow",
-    "torch==2.7.0",
+    "torch==2.7.0", # use any version if you do not have cuda env
     "torchvision",
     "tqdm",
 ]
@@ -29,6 +30,7 @@ torch = { index = "pytorch-cu128" }
 torchvision = { index = "pytorch-cu128" }
 torchaudio = { index = "pytorch-cu128" }
 
+# use this if you do not have cuda env
 # [tool.uv.sources]
 # torch = { index = "pytorch-cpu" }
 # torchvision = { index = "pytorch-cpu" }
