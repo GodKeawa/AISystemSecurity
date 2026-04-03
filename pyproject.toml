@@ -9,6 +9,7 @@ dependencies = [
     "jupyter>=1.1.1",
     "matplotlib",
     "numpy",
+    "pandas>=3.0.1",
     "pillow",
     "torch==2.7.0", # use any version if you do not have cuda env
     "torchvision",
