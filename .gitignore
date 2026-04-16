@@ -18,3 +18,5 @@ uv.lock
 MNIST/
 models/
 model/
+*/data/fgsm_img_label.pkl
+*/data/pgd_img_label.pkl
