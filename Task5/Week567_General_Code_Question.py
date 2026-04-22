@@ -100,7 +100,7 @@ def fgsm(imgs, epsilon, model, criterion, labels):
     # TODO：得到输入的梯度、生成对抗样本
     # 公式：adv_xs = imgs + epsilon * sign(grad)，其中grad是输入的梯度，sign()是符号函数
     grad = adv_xs.grad
-    adv_xs = adv_xs.detach() + epsilon * grad.sign()
+    adv_xs = adv_xs.detach() + epsilon * grad.sign() # 梯度上升，生成对抗样本
     # TODO：对扰动做截断，保证对抗样本的像素值在合理域内
     # 使用函数：torch.clamp(input, min, max)可以对输入张量的元素进行截断，使其值在指定的范围内
     adv_xs = torch.clamp(adv_xs, min=0.0, max=1.0)
@@ -200,6 +200,7 @@ def load_mnist(batch_size):
     transform = torchvision.transforms.Compose(
         [
             torchvision.transforms.ToTensor(),
+            torchvision.transforms.Normalize(mean=[0.5], std=[0.5]),
             # torchvision.transforms.Normalize((0.1307,), (0.3081,)),
         ]
     )
