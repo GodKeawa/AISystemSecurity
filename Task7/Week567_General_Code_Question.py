@@ -81,6 +81,10 @@ def evaluate_dataloader(dataloader, model):
     t = tqdm(dataloader)
     for img, label in t:
         # TODO: Predict label for img, update correct_cnt, sample_cnt
+        pred = model(img)
+        pred_label = torch.argmax(pred, dim=1)
+        correct_cnt += torch.sum(pred_label == label).item()
+        sample_cnt += label.shape[0]
 
         t.set_postfix(test_acc=correct_cnt / sample_cnt)
 
@@ -221,9 +225,34 @@ def nes(imgs, epsilon, model, labels, sigma, n):
 
     grad = torch.zeros_like(adv_xs)
     # TODO: Estimate gradient for each sample adv_x in adv_xs
+    for i in range(len(adv_xs)):
+        x = adv_xs[i]
+        label = labels[i]
+
+        for _ in range(n):
+            u = torch.randn_like(x)
+
+            # 生成扰动样本
+            x_plus = (x + sigma * u).view(1, 1, 28, 28)
+            x_minus = (x - sigma * u).view(1, 1, 28, 28)
+
+            # 黑盒模型前向传播，无需计算梯度
+            with torch.no_grad():
+                out_plus = model(x_plus)
+                out_minus = model(x_minus)
+
+            # 要造成误分类，我们需要最小化真实类别的预测置信度
+            # 因此，这里的 loss 取真实类别的概率评估
+            loss_plus = out_plus[0, label]
+            loss_minus = out_minus[0, label]
+
+            # 累加梯度求近似
+            grad[i] += (loss_plus - loss_minus) * u / (2 * sigma)
+
+        grad[i] /= n
 
     adv_xs = adv_xs.detach() - epsilon * grad.sign()
-    adv_xs = torch.clamp(adv_xs, min=0.0, max=1.0)
+    adv_xs = torch.clamp(adv_xs, min=0.0, max=1.0).view(-1, 1, 28, 28) # 恢复原图形状
 
     model.train()
 
