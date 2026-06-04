@@ -18,6 +18,7 @@ uv.lock
 *.npy
 *.pkl
 MNIST/
+USPS/
 models/
 model/
 */data/fgsm_img_label.pkl
