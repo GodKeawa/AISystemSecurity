@@ -12,6 +12,7 @@ dependencies = [
     "opencv-python>=4.13.0.92",
     "pandas>=3.0.1",
     "pillow",
+    "scipy>=1.17.1",
     "torch==2.7.0", # use any version if you do not have cuda env
     "torchvision",
     "tqdm",
