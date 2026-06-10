@@ -64,8 +64,10 @@ def compute_match_rate(model, X_wm, target_b, threshold=0.5):
     with torch.no_grad():
         # TODO: 结合模型特定层权重与水印向量X_wm，计算与target_b的一致性匹配率
         # NOTE: 可能用到的API: torch.sigmoid
-        
-        match_rate = 
+        weight = model.get_weight()
+        b = torch.matmul(weight, X_wm)
+        pred_b = (torch.sigmoid(b) >= threshold).float()
+        match_rate = (pred_b == target_b).float().mean().item()
 
     return match_rate  # match_rate为一个0～1之间的浮点数
 
@@ -106,6 +108,9 @@ def get_usps_loader(batch_size=128):
         [
             # TODO: 定义USPS数据集的预处理方式
             # NOTE: 可能用到的API: transforms.Resize, transforms.ToTensor
+            # USPS数据集的图像尺寸为16x16, 需要Resize到MNIST数据集的图像尺寸28x28，都是单通道灰度图，无Normalize操作
+            transforms.Resize((28, 28)),
+            transforms.ToTensor(),
         ]
     )
 

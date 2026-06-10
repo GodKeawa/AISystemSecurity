@@ -17,6 +17,7 @@ uv.lock
 *.png
 *.npy
 *.pkl
+*.pth
 MNIST/
 USPS/
 models/
