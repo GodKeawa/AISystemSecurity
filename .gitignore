@@ -19,6 +19,7 @@ uv.lock
 *.pkl
 *.pth
 MNIST/
+cifar-10-batches-py/
 USPS/
 models/
 model/
@@ -26,3 +27,4 @@ ref/
 */data/fgsm_img_label.pkl
 */data/pgd_img_label.pkl
 MNIST.zip
+cifar-10-python.tar.gz
