@@ -66,7 +66,8 @@ def compute_match_rate(model, X_wm, target_b, threshold=0.5):
         # NOTE: 可能用到的API: torch.sigmoid
         weight = model.get_weight()
         b = torch.matmul(weight, X_wm)
-        pred_b = (torch.sigmoid(b) >= threshold).float()
+        # 下面不应该取 >= threshold, 因为当模型权重全是0时，b全是0，sigmoid(b)全是0.5, 这时应该是完全不匹配的，所以应该是 > threshold
+        pred_b = (torch.sigmoid(b) > threshold).float()
         match_rate = (pred_b == target_b).float().mean().item()
 
     return match_rate  # match_rate为一个0～1之间的浮点数

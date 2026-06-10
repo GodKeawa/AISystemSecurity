@@ -22,6 +22,7 @@ MNIST/
 USPS/
 models/
 model/
+ref/
 */data/fgsm_img_label.pkl
 */data/pgd_img_label.pkl
 MNIST.zip
